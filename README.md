@@ -4,7 +4,9 @@ I also wanted to demonstrate how Ansible and Terraform could work in tandem to a
 
 This project is based on the AWS Whitepaper "Best Practices for WordPress on AWS" which you can download as a PDF here: 
 https://docs.aws.amazon.com/pdfs/whitepapers/latest/best-practices-wordpress/best-practices-wordpress.pdf#welcome 
-Here's the Reference diagram: ![aws-wordpress-architecture-diagram](https://github.com/user-attachments/assets/3ee3706f-43aa-4e62-9dcd-3bad406e161e)
+Here's the Reference diagram: 
+
+![aws-wordpress-architecture-diagram](https://github.com/user-attachments/assets/3ee3706f-43aa-4e62-9dcd-3bad406e161e)
 
 
 Being me, I decided to tweak the architecture by replacing EC2 instances with EKS, removing the Bastion Host (we use EC2 Endpoints now!) and adding extra helm charts like external-dns, 
