@@ -1,6 +1,6 @@
 # wp-project
 This was a project I did for a prospective client to highlight the advantages of EKS over the use of ECS to improve their deployment process. 
-I also wanted to demonstrate how Ansible and Terraform could work in tandem to assist with SOC 2 compliance and configuration management.
+I also wanted to demonstrate how Ansible and Terraform could work in tandem for provisiong, configuation management, and security compliance.
 
 This project is based on the AWS Whitepaper "Best Practices for WordPress on AWS" which you can download as a PDF here:
 
@@ -12,8 +12,8 @@ Here's the Reference diagram:
 
 Being me, I decided to tweak the architecture by adding an extra AZ, replacing the EC2 instances with EKS, removing the Bastion Host (we use EC2 Endpoints now!) and adding extra functionality with helm charts like external-dns, AWS Load Balancer Controller, External Secrets Operation for Kubernetes, and Bitnami Wordpress for Kubernetes. 
 
-Additoanl Services Leveraged:
+Additoanl Services Leveraged not included in the White Paper
 - ACM 
 - AWS Secrets Manager 
 
-This is the first of several production ready AWS architectures that I'm publishing to my repo that you can clone and use for your own purposes:
+IF YOU PROVISION THIS ARCHITECTURE THIS WILL COST SOME MONEY! THIS WILL TAKE YOU OUT OF THE FREE TIER!!! I've tried my best to keep costs low by using the lowest, smallest instance classes, but THERE WILL STILL BE COSTS ASSOCIATED. YOU'VE BEEN WARNED!
