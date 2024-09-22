@@ -10,15 +10,8 @@ Here's the Reference diagram: ![aws-wordpress-architecture-diagram](https://gith
 Being me, I decided to tweak the architecture by replacing EC2 instances with EKS, removing the Bastion Host (we use EC2 Endpoints now!) and adding extra helm charts like external-dns, 
 AWS Load Balancer Controller, External Secrets Operation for Kubernetes,Bitnami Wordpress for Kubernetes. 
 
-AWS Services Leveraged:
-- VPC
-- Nat GW
-- IGW
-- EKS
-- EFS
-- ACM
-- AWS Secrets Manager
-- Elasticache/Memcached
-- Aurora DB
+Additoanl Services Leveraged:
+- ACM *
+- AWS Secrets Manager *
 
 This is the first of several production ready AWS architectures that I'm publishing to my repo that you can clone and use for your own purposes:
