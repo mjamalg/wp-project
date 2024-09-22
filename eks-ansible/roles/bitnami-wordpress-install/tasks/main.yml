@@ -1,0 +1,50 @@
+---
+- name: Get RDS Endpoint 
+  amazon.aws.rds_cluster_info:
+    db_cluster_identifier: "{{ rds_cluster_db_identifier }}"
+  register: rds_info
+
+- debug:
+    msg: "{{ rds_info.clusters[0].endpoint }}"
+
+- name: obtain all information for a single ACM certificate
+  community.aws.acm_certificate_info:
+    domain_name: "{{ cert_domain }}"
+  register: cert_info
+
+- debug:
+    msg: "{{ cert_info.certificates[0].certificate_arn }}"
+
+- name: obtain all information for a single ElastiCache cluster
+  community.aws.elasticache_info:
+    name: "{{ elasticache_cluster_name }}"
+  register: elasticache_info
+  tags:
+    - get_elasticache_endpoint
+
+- name: Create IAM access and secret key for Wordpress CloudFront user created in Terraform
+  #Check the cloudfront-user.tf file in vpc-terraform for reference
+  ansible.builtin.shell: aws iam create-access-key --user-name {{ wp_cd_user }} > {{ role_file_path }}/wpcdn-user-credentials.json
+  tags:
+    -    create_wpcdn_iam_access_and_secret_key   
+  
+- set_fact:
+    memcache_endpoint: "{{ elasticache_info.elasticache_clusters[0].configuration_endpoint.address }}:{{ elasticache_info.elasticache_clusters[0].configuration_endpoint.port }}"
+
+- name: Create Bitnami Wordpress value override chart
+  ansible.builtin.template:
+        src: bitnami-wp-values.j2
+        dest: "{{ role_file_path }}/bitnami-wp-values.yml"
+  tags:
+     - create_bitnami_values_chart
+
+- name: Install Bitnami Wordpress chart
+  kubernetes.core.helm: 
+    release_name: my-release
+    namespace: wordpress
+    create_namespace: true
+    chart_ref: "oci://registry-1.docker.io/bitnamicharts/wordpress"
+    values_files:
+      - "{{ role_file_path }}/bitnami-wp-values.yml"
+  tags:
+    - install_bitnami_wp_chart

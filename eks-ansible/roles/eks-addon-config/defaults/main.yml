@@ -1,0 +1,4 @@
+---
+cert_manager_helm_chart_version: 1.15.3
+eks_cluster_name: wp-project-eks-cluster
+role_file_path: "{{ role_path }}/files"

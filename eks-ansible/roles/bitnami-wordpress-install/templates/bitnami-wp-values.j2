@@ -1,0 +1,32 @@
+wordpressUsername: admin 
+wordpressPassword: password
+resourcePreset: small
+mariadb:
+  enabled: false
+externalDatabase:
+  host: {{ rds_info.clusters[0].endpoint }}
+  database: wpdb
+  user: wpdbadmin
+  existingSecret: aurora-db-secret
+  port: 3306
+#wordpressConfigureCache: true
+#externalCache:
+#  host: {{ memcache_endpoint }} 
+#  port: 11211 
+persistence:
+  existingClaim: wp-project-efs-pvc
+replicaCount: 3
+ingress:
+  enabled: true
+  ingressClassName: alb
+  hostname: {{ hostname }}
+  path: /*
+  annotations: { 
+    alb.ingress.kubernetes.io/scheme: internet-facing,
+    alb.ingress.kubernetes.io/target-type: instance,
+    alb.ingress.kubernetes.io/certificate-arn: {{ cert_info.certificates[0].certificate_arn }}, # Just get a public one for you domain it's free no excuses
+    alb.ingress.kubernetes.io/tags: Name={{ alb_ingress_tag }}, # This is optional, I tag everything!
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]',
+    alb.ingress.kubernetes.io/ssl-redirect: '443',  # HTTP to HTTPS redirect
+    external-dns.alpha.kubernetes.io/hostname: {{ hostname }}
+    }

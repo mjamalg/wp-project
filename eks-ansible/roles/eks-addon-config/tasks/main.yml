@@ -1,0 +1,91 @@
+---
+- name: Configure external-dns service account
+  kubernetes.core.k8s:
+    state: present
+    src: external-dns-sa-config.yml
+  tags:
+    - configure_external_dns
+
+- name: Install helm diff
+  kubernetes.core.helm_plugin:
+    plugin_path: "https://github.com/databus23/helm-diff"
+    state: present
+  tags:
+    - install_helm_diff
+
+- name: Add AWS Load Balancer Controller helm repo
+  kubernetes.core.helm_repository:
+    name: aws-load-balancer-controller
+    repo_url: "https://aws.github.io/eks-charts"
+  tags: 
+    - add_aws_load_balancer_controller
+
+- name: Install AWS Load Balancer Controller chart
+  kubernetes.core.helm: 
+    release_name: aws-load-balancer-controller
+    chart_ref: eks/aws-load-balancer-controller 
+    release_namespace: kube-system
+    wait: True
+    values:
+      clusterName: "{{ eks_cluster_name }}"
+      serviceAccount: 
+        create: False
+        name: aws-load-balancer-controller
+  tags:
+    - install_aws_load_balancer_chart
+
+- name: Install cert manager helm repo
+  kubernetes.core.helm_repository:
+    name: cert-manager
+    repo_url: "https://charts.jetstack.io"
+  tags:
+    - install_cert_manager_repo
+
+- name: Install cert manager chart
+  kubernetes.core.helm:
+    release_name: cert-manager
+    chart_ref: jetstack/cert-manager
+    chart_version: "{{ cert_manager_helm_chart_version }}"
+    release_namespace: cert-manager
+    create_namespace: True
+    wait: True
+    values: 
+        crds:
+          enabled: True
+  tags:
+    - install_cert_manager_chart
+
+- name: Get EFS filesystem and access point id
+  #This was the only way I could think of to get the volumehandle info for the k8s persistant volume definition used
+  #with the roles/eks-addon-config/templates/efs-stg-class.j2 template. If there's a better way, let me know (!!!) and use it here. 
+  #The the string that needs to be created is "FilsystemId::AccessPointId" (i.e. fs-xxxxxxxxxxxxxx::fsap-xxxxxxxxxxxxxxxxxxxx )
+  ansible.builtin.shell: |
+    aws efs describe-access-points \
+    --query 'AccessPoints[?RootDirectory.Path==`/efs/wordpress` && PosixUser==null].[FileSystemId, AccessPointId]' \
+    --output text | awk '{print $1 "::" $2}'
+  register: efs_id_ap
+  tags:
+    - get_efs_fs_and_ap_id
+
+- name: Create wordpress namespace for persistant volume claim and wordpress install
+  kubernetes.core.k8s:
+    name: wordpress
+    api_version: v1
+    kind: Namespace
+    state: present
+  tags:
+    - create_namespace
+
+- name: Create k8s EFS persistant volume claim manifest 
+  ansible.builtin.template:
+    src: efs-stg-class.j2
+    dest: "{{ role_file_path }}/efs-stg-class.yml"
+  tags:
+    - create_efs_pvc_manifest
+  
+- name: Create k8s EFS persistant volume claim for wordpress
+  kubernetes.core.k8s:
+    state: present
+    src: "{{ role_file_path }}/efs-stg-class.yml"
+  tags:
+    - create_efs_pvc

@@ -1,0 +1,11 @@
+#rds-auroras.var
+rds_engine = "aurora-mysql"
+rds_engine_version = "8.0.mysql_aurora.3.05.2"
+rds_instance_class = "db.t3.medium" 
+rds_db_master_username = "wpdbadmin"
+rds_db_master_password = "Th1s1sn0tth3Way"
+rds_db_name = "wpdb"
+rds_db_cluster_parameter_group_name = "default.aurora-mysql8.0"
+rds_db_cluster_parameter_group_family = "aurora-mysql8.0"
+rds_security_group_name = "wp-project-rds-aurora-sgr"
+rds_tag = "WP Project RDS Aurora DB"
