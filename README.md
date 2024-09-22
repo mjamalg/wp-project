@@ -8,15 +8,12 @@ https://docs.aws.amazon.com/pdfs/whitepapers/latest/best-practices-wordpress/bes
 
 Here's the Reference diagram: 
 
-![WP-Project](https://github.com/user-attachments/assets/f3ed12bf-d9f6-4dff-97fd-8f9431b73efb)
+![aws-wp-best-practices](https://github.com/user-attachments/assets/1eea8411-6c1f-4b3e-8ea2-419563ae18f9)
 
-
-
-Being me, I decided to tweak the architecture by replacing EC2 instances with EKS, removing the Bastion Host (we use EC2 Endpoints now!) and adding extra helm charts like external-dns, 
-AWS Load Balancer Controller, External Secrets Operation for Kubernetes,Bitnami Wordpress for Kubernetes. 
+Being me, I decided to tweak the architecture by adding an extra AZ, replacing the EC2 instances with EKS, removing the Bastion Host (we use EC2 Endpoints now!) and adding extra functionality with helm charts like external-dns, AWS Load Balancer Controller, External Secrets Operation for Kubernetes, and Bitnami Wordpress for Kubernetes. 
 
 Additoanl Services Leveraged:
-- ACM *
-- AWS Secrets Manager *
+- ACM 
+- AWS Secrets Manager 
 
 This is the first of several production ready AWS architectures that I'm publishing to my repo that you can clone and use for your own purposes:
