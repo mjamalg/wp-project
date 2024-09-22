@@ -1,0 +1,52 @@
+---
+- name: Create WP Project Eksctl YAML Configuration File
+  hosts: localhost
+  gather_facts: False
+  become: False
+
+  vars:
+    eks_cluster_name: wp-project-eks-cluster
+    aws_region: us-east-1
+
+  tasks:
+    - name: Get VPC id
+      amazon.aws.ec2_vpc_net_info:
+        filters:
+          "tag:Name": WP Project
+      register: vpc_info
+      tags:
+        - get_vpc_id
+
+    - set_fact:    
+        vpc_id: "{{ vpc_info.vpcs | map(attribute='vpc_id') }}"
+
+    - name: Get AWS Load Balancer Controller policy
+      amazon.aws.iam_managed_policy:
+        name: AWSLoadBalancerControllerIAMPolicy
+      register: policy_info
+      tags:
+        - get_aws_loadbalancer_policy_ino
+      
+    - name: Get private app subnet ids
+      amazon.aws.ec2_vpc_subnet_info:
+        filters:
+          "tag:Name": WP Project-priv-app-{{ item }}
+      loop:
+        - 1a
+        - 1b
+        - 1c
+      register: subnet_info
+      tags:
+        - get_priv_app_subnet_ids
+
+    - set_fact:
+        subnet_ids: "{{ subnet_info.results | sum(attribute='subnets', start=[]) | map(attribute='subnet_id') }}"
+
+    - name: Create eksctl YAML config file
+      ansible.builtin.template:
+        src: "./eksctl-config-files/eksctl-config.j2"
+        dest: "./eksctl-config-files/eksctl-config.yml"
+      tags:
+        - create_eksctl_yaml_config_file
+
+    

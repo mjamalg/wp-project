@@ -1,0 +1,90 @@
+---  
+- name: Install External Secrets Operator (ESO) helm repo
+  kubernetes.core.helm_repository:
+    name: external-secrets
+    repo_url: https://charts.external-secrets.io
+  tags:
+    - install_eso_repo
+
+- name: Install ESO chart
+  kubernetes.core.helm:
+    release_name: external-secrets
+    chart_ref: external-secrets/external-secrets
+    release_namespace: external-secrets
+    create_namespace: True
+    wait: True
+  tags:
+    - install_eso_chart 
+
+- name: Create IAM access and secret key for ESO user created in Terraform
+  #Check the eso-user-policy.tf file in vpc-terraform for reference
+  ansible.builtin.shell: aws iam create-access-key --user-name {{ eso_iam_user }} > {{ role_file_path }}/eso-user-credentials.json
+  tags:
+    - create_eso_iam_access_and_secret_key
+
+- name: Read the credentials JSON file
+  set_fact:
+    aws_credentials: "{{ lookup('file', '{{ role_file_path }}/eso-user-credentials.json') | from_json }}"
+  tags:
+    - read_eso_aws_credentials_file
+
+- name: Obtain the ESO IAM user access key id
+  set_fact:
+    access_key_id: "{{ aws_credentials['AccessKey']['AccessKeyId'] }}"
+  tags:
+    - obtain_eso_iam_user_access_key_id
+
+- name: Obtain the ESO IAM user secret access key
+  set_fact:
+    secret_access_key: "{{ aws_credentials['AccessKey']['SecretAccessKey'] }}"
+  tags:
+    - obtain_eso_iam_user_secret_access_key
+
+- name: Create AWS credential files used to create ESO secret
+  ansible.builtin.shell: |
+    echo -n "{{ access_key_id }}" > {{ role_file_path }}/eso-user-aws-access-key
+    echo -n "{{ secret_access_key }}" > {{ role_file_path }}/eso-user-aws-secret-access-key
+  tags:
+    - create_aws_credentail_files
+
+- name: Create k8s secret for ESO to access AWS Secrets Manager
+  ansible.builtin.shell: |
+    kubectl -n default create secret generic awssm-secret \
+      --from-file={{role_file_path}}/eso-user-aws-access-key \
+      --from-file={{role_file_path}}/eso-user-aws-secret-access-key
+  tags:
+    - create_k8s_secret_for_eso_access
+
+- name: Create cluster secret store
+  kubernetes.core.k8s:
+    state: present
+    src: eso-cluster-secret-store.yml
+  tags:
+    - create_cluster_secret_store
+
+- name: Get Secrets Manager secret name containing Aurora auth info
+  # This was the best way I could think of to get the randomly generated secret name I created.
+  # If you have a better way obtain it do it here and let me know! Keep the register variable name as
+  # I use it in the the aurora-db-secret.j2 template - also if you change my tag naming convention you have to change it here as well
+  ansible.builtin.shell: |
+    aws secretsmanager list-secrets \
+      --filters "Key=tag-key,Values=Name" "Key=tag-value,Values=WP Project Aurora Secret" \
+      --query 'SecretList[*].Name' --output text
+  register: rds_sec_name
+  tags:
+    - get_awssm_secret
+
+- name: Create external secrets k8s manifest with AWSSM RDS Aurora secret name 
+  ansible.builtin.template:
+    src:  aurora-db-secret.j2
+    dest: "{{ role_file_path }}/aurora-db-secret.yml"
+  tags:
+    - create_external_secrets_manifest
+
+- name: Create external secret
+  kubernetes.core.k8s:
+    state: present
+    src: "{{ role_file_path }}/aurora-db-secret.yml"
+  tags:
+    - create_external_secret    
+    

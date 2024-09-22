@@ -1,0 +1,57 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: wp-project-eks-cluster
+  region: {{ aws_region }}
+
+vpc:
+  id: {{ vpc_id[0] }}
+  subnets:
+    private:
+      us-east-1a:
+        id: {{ subnet_ids[0] }}
+      us-east-1b:
+        id: {{ subnet_ids[1] }}
+      us-east-1c:
+        id: {{ subnet_ids[2] }}
+
+iam:
+  withOIDC: true
+  serviceAccounts:
+  - metadata:
+      name: external-dns
+      namespace: kube-system
+    wellKnownPolicies:
+      externalDNS: true
+  - metadata:
+      name: aws-load-balancer-controller
+      namespace: kube-system
+    attachPolicyARNs:
+    - {{ policy_info.policy.arn }}
+
+managedNodeGroups:
+- name: wp-project-eks-ng
+  instanceType: t3.small
+  minSize: 2
+  desiredCapacity: 3
+  maxSize: 4
+  privateNetworking: true
+  iam:
+    withAddonPolicies:
+      externalDNS: true
+
+addonsConfig:
+  autoApplyPodIdentityAssociations: true
+
+addons:
+- name: vpc-cni
+  version: latest
+- name: eks-pod-identity-agent
+  version: latest
+- name: coredns
+  version: latest
+- name: kube-proxy
+  version: latest
+- name: aws-efs-csi-driver
+  version: latest
