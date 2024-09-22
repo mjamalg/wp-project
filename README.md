@@ -8,7 +8,8 @@ https://docs.aws.amazon.com/pdfs/whitepapers/latest/best-practices-wordpress/bes
 
 Here's the Reference diagram: 
 
-![aws-wordpress-architecture-diagram](https://github.com/user-attachments/assets/3ee3706f-43aa-4e62-9dcd-3bad406e161e)
+![WP-Project](https://github.com/user-attachments/assets/f3ed12bf-d9f6-4dff-97fd-8f9431b73efb)
+
 
 
 Being me, I decided to tweak the architecture by replacing EC2 instances with EKS, removing the Bastion Host (we use EC2 Endpoints now!) and adding extra helm charts like external-dns, 
