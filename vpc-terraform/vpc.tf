@@ -18,10 +18,10 @@ module "vpc" {
   enable_nat_gateway = true
   single_nat_gateway = false
   one_nat_gateway_per_az = true
-  nat_gateway_tags = { Name = "${var.vpc_custom_name} Priv NATGW" }
+  nat_gateway_tags = { Name = var.vpc_nat_gateway_tag }
    
   create_igw = true # default but put here for readability
-  igw_tags = { Name = "${var.vpc_custom_name} Public IGW" }
+  igw_tags = { Name = var.vpc_igw_tag }
 
   #Enable DNS Hostnames Necessary For External-DNS
   enable_dns_hostnames = true
