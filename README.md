@@ -14,7 +14,8 @@ AWS Whitepaper: Best Practices for WordPress
 
 Here's the original reference diagram in the whitepaper:
 
-![AWS Reference Architecture](/home/jamal/Downloads/aws-presentation.jpg)
+![aws-presentation](https://github.com/user-attachments/assets/a4aac926-36ca-47a2-b578-1eb87f485214)
+
 
 Being me, I decided to tweak the architecture by adding an extra AZ, replacing the EC2 instances with EKS, removing the Bastion Host (we use EC2 Endpoints now!) and adding extra functionality with helm charts like external-dns, AWS Load Balancer Controller, External Secrets Operator for Kubernetes, and Bitnami Wordpress for Kubernetes.
 
