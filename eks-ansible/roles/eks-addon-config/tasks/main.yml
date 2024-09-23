@@ -15,7 +15,7 @@
 
 - name: Add AWS Load Balancer Controller helm repo
   kubernetes.core.helm_repository:
-    name: aws-load-balancer-controller
+    repo_name: eks
     repo_url: "https://aws.github.io/eks-charts"
   tags: 
     - add_aws_load_balancer_controller
@@ -36,7 +36,7 @@
 
 - name: Install cert manager helm repo
   kubernetes.core.helm_repository:
-    name: cert-manager
+    repo_name: jetstack
     repo_url: "https://charts.jetstack.io"
   tags:
     - install_cert_manager_repo
