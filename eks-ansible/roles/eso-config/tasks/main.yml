@@ -18,7 +18,7 @@
 
 - name: Create IAM access and secret key for ESO user created in Terraform
   #Check the eso-user-policy.tf file in vpc-terraform for reference
-  ansible.builtin.shell: aws iam create-access-key --user-name {{ eso_iam_user }} > {{ role_file_path }}/eso-user-credentials.json
+  ansible.builtin.shell: aws iam create-access-key --user-name {{ eso_iam_user }} --output json > {{ role_file_path }}/eso-user-credentials.json
   tags:
     - create_eso_iam_access_and_secret_key
 
