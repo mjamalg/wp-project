@@ -4,9 +4,11 @@
 ** IF YOU PROVISION THIS ARCHITECTURE THIS WILL COST MONEY!!! THIS WILL TAKE YOU OUT OF THE FREE TIER!!! I'VE TRIED MY BEST TO KEEP COSTS LOW BY USING THE SMALLEST INSTANCE CLASSES ALLOWED AND THE CHEAPEST CONFIGURATIONS. HOWEVER THERE WILL STILL BE COSTS ASSOCIATED. YOU'VE BEEN WARNED!!!!! **
 
 ### About
-This was a project I did for a prospective client to highlight the advantages of AWS EKS over the use of ECS. I also wanted to demonstrate how Ansible and Terraform could work in tandem for provisiong, configuation management, and security compliance. Most of all, I wanted to do all of this with as close to a "Production" level architecture as I could provision without spending the few coins I have AND the provisioning had to be automated.
+This was a project I did for a prospective client to highlight the advantages of AWS EKS over the use of ECS to improve their deployment process. I also wanted to demonstrate how Ansible and Terraform could work in tandem for provisiong, configuation management, and security compliance. Most of all, I wanted to do all of this with as close to a "Production" level architecture as I could provision without spending the few coins I have AND the provisioning had to be automated.
 
 The project is based on the AWS Whitepaper "Best Practices for WordPress on AWS" which you can download as a PDF here:
+
+AWS Whitepaper: Best Practices for WordPress
 
 [https://docs.aws.amazon.com/pdfs/whitepapers/latest/best-practices-wordpress/best-practices-wordpress.pdf#welcome]()
 
@@ -14,7 +16,7 @@ Here's the original reference diagram from the whitepaper:
 
 ![aws-presentation](https://github.com/user-attachments/assets/a4aac926-36ca-47a2-b578-1eb87f485214)
 
-I decided to modify the whitepaper architecture by adding an extra AZ, replacing EC2 instances with an EKS cluster, removing the Bastion Host (LOL) and adding extra functionality with helm charts for ExternalDNS, the AWS Load Balancer Controller, the External Secrets Operator for Kubernetes, and Bitnami's Wordpress for Kubernetes. Here's my version:
+I decided to modify the whitepaper architecture by adding an extra AZ, replacing EC2 instances with an EKS cluster, removing the Bastion Host (LOL) and adding extra functionality with helm charts for external-dns, the AWS Load Balancer Controller, the External Secrets Operator for Kubernetes, and Bitnami's Wordpress for Kubernetes. Here's my version:
 
 Additional services leveraged not included in the whitepaper:
 * AWS Certificate Manager (ACM)
@@ -128,10 +130,26 @@ The playbook has installed the AWS Load Balancer Controller, the External Secret
  
  Depending on DNS and your TTL's it may take between 10 minutes and even 2 hours before you'll be able to see the default WP page when you go to your browser:
  ![wp-project-home-page](https://github.com/user-attachments/assets/f323c79c-0ff3-4be8-b424-99eff6e2d669)
-
-
-
-
-
-
-
+A full tutorial on how to use and configure Wordpress is beyond the scope of this project. However I will add a couple of pointers for you to help you get started.
+- W3 Total Cache for Memcached and CDN configuration
+  - Wordpress uses the W3 Total Cache plugin for Memcached and configuration. There seems to be an issue with connecting the plugin with AWS Elasticache. 
+  - Here's a link to an excellent tutorial on how to configure the plugin to work with CloudFront. The wpcdn user has been created for you to do this. The Access Key and Secret Access Key will be located in the eks-ansible/roles/bitnami-wordpress-install/files/wpcdn-user-credentials.json file provided you ran the wp-eks-install.yml playbook successfully.
+      - []()[Setup An AWS CloudFront CDN For WordPress in 15 Minutes](https://www.youtube.com/watch?v=eOOk_wSmfYI)
+   
+### Removing All Resources
+##### 1. Uninstall the Bitnami WordPress helm chart 
+This gracefully removes the entry made in the Route 53 host zone by ExternalDNS. If you know anything about DNS you know this comes under **MUST DO!**
+```
+$ helm uninstall my-release --namespace wordpress
+```
+##### 2. Use eskctl to delete the EKS cluster (will take between 15 - 30 minutes)
+Run the following command in the _**eks-ansible**_ directory:
+```
+$ eksctl delete cluster -f eksctl-config-files/eksctl-config.yml
+```
+##### 3. Terraform destory (will take between 15 - 30 minutes)
+Run the following command the _**vpc-terraform**_ directory:
+```
+$ terraform destory -auto-approve
+```
+## QED
