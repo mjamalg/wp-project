@@ -1,5 +1,5 @@
 ---
-- name: Configure external-dns service account
+- name: Configure ExteranalDNS service account
   kubernetes.core.k8s:
     state: present
     src: external-dns-sa-config.yml

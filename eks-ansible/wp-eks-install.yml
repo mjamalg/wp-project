@@ -5,12 +5,6 @@
   become: False
 
   pre_tasks:
-    - name: Install some Python Pre-reqs
-      pip:
-        name:
-          - pyyaml 
-          - kubernetes
-
     - name: EKS Configuration
       debug:
         msg: "Configuring EKS Cluster for WP"
