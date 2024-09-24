@@ -4,19 +4,14 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.64.0"
     }
-
-    helm = {
-      source = "hashicorp/helm"
-      version = "2.15.0"
-    }
   }
 }
 
 
 provider "aws" {
   region = "us-east-1"
-  profile = "< IF YOU USE AN AWS PROFILE PLACE IT HERE >"
-
-  #Place your AWS Credentials here
+  profile = "< I perfer to use the AWS_PROFILE env variable, if you also use it put it here >"
+ 
+   #Place your AWS Credentials here if you don't use the AWS_PROFILE env variable
 
 }

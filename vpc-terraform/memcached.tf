@@ -1,7 +1,5 @@
-
 module "elasticache" {
   source = "terraform-aws-modules/elasticache/aws"
-  version = "1.2.2"
  
   #Memcache
   cluster_id               = var.memcached_cluster_id
