@@ -100,25 +100,27 @@ After Terraform is finished provisiong you should have the following resources a
 
 ###### **EKS**
 Run the following commands in the _**eks-ansible**_ directory to deploy EKS:
-    - ```
-    $ ansible-playbook eksctl-config-file-create.yml
-    ```
-     - ``` 
-     $ eksctl create cluster -f eksctl-config-files/eksctl-config.yml
-    ```
+```
+$ ansible-playbook eksctl-config-file-create.yml
+```
+``` 
+$ eksctl create cluster -f eksctl-config-files/eksctl-config.yml
+```
 After EKS is deployed, verify it's running and that you have access to it by running the following commands:
-    * ``` $ kubectl get nodes
-    ```
+```
+  $ kubectl get nodes
+```
 ![wp-project-kubectl-check-readme-1](https://github.com/user-attachments/assets/2c3e0787-8b26-42ff-acdb-29ca58b916c1)
-    * ``` $ kubectl get namespaces
-    ```
+```
+$ kubectl get namespaces
+```
 ![wp-project-kubectl-check-readme-2](https://github.com/user-attachments/assets/cb6fcc25-d954-46d9-ae8c-8f4e813a6a3a)
 
 ##### Bitnami WP Install
 Run the following command in the _**eks-ansible**_ directory
-    * ```$ ansible-playbook wp-eks-install.yml
-    ```
-
+```
+$ ansible-playbook wp-eks-install.yml
+```
 The playbook has installed the AWS Load Balancer Controller, the External Secrets Operator (allows access to the Secrets Manager secret as a kubernetes secret),  cert-manager, ExternalDNS (synchronizes exposed Kubernetes Services and Ingresses with Route 53)
  and Bitnami Wordpress for Kubernetes.  Depending on DNS and TTL's it may take between 10 minutes and even 2 hours before you'll be able to see 
  
