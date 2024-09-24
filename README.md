@@ -1,4 +1,4 @@
-# WP Project (THIS IS A WORK IN PROGRESS)
+# WP Project (EKS Version)
 
 ## Disclaimer/Notice:
 ** IF YOU PROVISION THIS ARCHITECTURE THIS WILL COST MONEY!!! THIS WILL TAKE YOU OUT OF THE FREE TIER!!! I'VE TRIED MY BEST TO KEEP COSTS LOW BY USING THE SMALLEST INSTANCE CLASSES ALLOWED AND THE CHEAPEST CONFIGURATIONS. HOWEVER THERE WILL STILL BE COSTS ASSOCIATED. YOU'VE BEEN WARNED!!!!! **
@@ -15,7 +15,6 @@ AWS Whitepaper: Best Practices for WordPress
 Here's the original reference diagram in the whitepaper:
 
 ![aws-presentation](https://github.com/user-attachments/assets/a4aac926-36ca-47a2-b578-1eb87f485214)
-
 
 Being me, I decided to tweak the architecture by adding an extra AZ, replacing the EC2 instances with EKS, removing the Bastion Host (we use EC2 Endpoints now!) and adding extra functionality with helm charts like external-dns, AWS Load Balancer Controller, External Secrets Operator for Kubernetes, and Bitnami Wordpress for Kubernetes.
 
@@ -72,29 +71,23 @@ $ git clone git@github.com:mjamalg/wp-project.git
   
 ##### 3. Provision the AWS environment (total time betwen 25 - 45 minutes):
 ###### VPC (Provision time approx 20 - 35 minutes)
-Run the following commands:
-    * ```
-$ cd vpc-terraform
+- Run the following commands in the _vpc-terraform_ directory:
+    - ```
+      $ terraform init && terraform apply -auto-approve
     ```
-    * ```	
-$ terraform init
-	```
-    * ``` 
-$ terraform apply -auto-approve
-    	 ```
-Terraform provisions the following:
-    * A new VPC tagged "WP Project" consisting of:
-    	* 3 Availablity Zones - us-east-1a,1b,1c with each az consisting of 1 public and 2 private subnets.
-    		* Public subnets are tagged WP Project-pub-1a|1b|1c.
-    		* Private app subnets (where the EKS cluster will be created) are tagged WP Project-priv-app-1a|1b|1c.
-    		* Private data subnets (where Aurora, Memcache and EFS are created) are tagged with WP Project-priv-data-1a|1b|1c.
-    * 1 IGW tagged "WP Project Public IGW" where all public subnets are routed through.
-    * 3 NAT GW's tagged "WP Project Priv NATGW", one for each AZ
-    * 5 route tables:
-    	* Default route table for the VPC
-    	* 1 public route table tagged WP Project Public Rtb
-    	* 3 private route tables tagged WP Project Private Rtb
-    *  5 Security Groups:  
+- Terraform provisions the following:
+    - A new VPC tagged "WP Project" consisting of:
+        - 3 Availablity Zones - us-east-1a,1b,1c with each az consisting of 1 public and 2 private subnets.
+            - Public subnets are tagged WP Project-pub-1a|1b|1c.
+            - Private app subnets (where the EKS cluster will be created) are tagged WP Project-priv-app-1a|1b|1c.
+            - Private data subnets (where Aurora, Memcache and EFS are created) are tagged with WP Project-priv-data-1a|1b|1c.
+    - 1 IGW tagged "WP Project Public IGW" where all public subnets are routed through.
+    - 3 NAT GW's tagged "WP Project Priv NATGW", one for each AZ
+    - 5 route tables:
+        - Default route table for the VPC
+        - 1 public route table tagged WP Project Public Rtb
+        - 3 private route tables tagged WP Project Private Rtb
+        - 5 Security Groups:  
 - EKS Cluster
     * run the following commands:
         * ```
