@@ -122,8 +122,16 @@ Run the following command in the _**eks-ansible**_ directory
 $ ansible-playbook wp-eks-install.yml
 ```
 The playbook has installed the AWS Load Balancer Controller, the External Secrets Operator (allows access to the Secrets Manager secret as a kubernetes secret),  cert-manager, ExternalDNS (synchronizes exposed Kubernetes Services and Ingresses with Route 53)
- and Bitnami Wordpress for Kubernetes.  Depending on DNS and TTL's it may take between 10 minutes and even 2 hours before you'll be able to see 
+ and Bitnami Wordpress for Kubernetes.  There are a few things you should see:
  
+ Route 53
+ - A TXT entry created by ExternalDNS
+ - An A record (with and additional CNAME if you specified a subdomain for your hostname) created by ExternalDNS with an alias pointing to an ALB created by the AWS Load Balancer Controller.
+ 
+ Depending on DNS and your TTL's it may take between 10 minutes and even 2 hours before you'll be able to see the default WP page when you go to your browser:
+ 
+ ![wp-project-home-page](https://github.com/user-attachments/assets/f323c79c-0ff3-4be8-b424-99eff6e2d669)
+
 
 
 
