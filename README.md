@@ -85,7 +85,7 @@ After Terraform is finished provisiong you should have the following resources a
   ![wp-project-sgr-list-readme-1](https://github.com/user-attachments/assets/fcf2ac29-a697-4043-80ad-1514449ba8fb)
 - An Aurora DB cluster using db.t3.medium instances:
   ![wp-project-aurora-readme-1](https://github.com/user-attachments/assets/b8a5b415-03b3-47fa-a330-cd843de2f939)
-- An EFS file system with a 2 Access points:
+- An EFS file system and 2 Access points:
   ![wp-project-efs-fs-readme-1](https://github.com/user-attachments/assets/cf4bac5b-1b50-4291-b97d-8358d990692e)
   ![wp-project-efs-ap-readme-1](https://github.com/user-attachments/assets/e7bc7d72-1bb3-4fcf-98ef-3eb328f9d842)
 - A 3 node Elasticache/Memcache cluster using cache.t3.micro instances
