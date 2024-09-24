@@ -82,6 +82,8 @@ $ terraform init && terraform apply -auto-approve
 ```
 After Terraform is finished provisiong you should have the following resources and services:
 - A VPC Resource map that looks similar to this:
+  ![wp-project-vpc-readme-1](https://github.com/user-attachments/assets/d72b2194-484c-40d8-a7b7-d063041639cd)
+
 - A List of Security groups that look similar to this:
 - An Aurora DB cluster using db.t3.medium instances:
 - An EFS file system with a 2 Access points:
