@@ -4,7 +4,7 @@
 ** IF YOU PROVISION THIS ARCHITECTURE THIS WILL COST MONEY!!! THIS WILL TAKE YOU OUT OF THE FREE TIER!!! I'VE TRIED MY BEST TO KEEP COSTS LOW BY USING THE SMALLEST INSTANCE CLASSES ALLOWED AND THE CHEAPEST CONFIGURATIONS. HOWEVER THERE WILL STILL BE COSTS ASSOCIATED. YOU'VE BEEN WARNED!!!!! **
 
 ### About
-This was a project I did for a prospective client to highlight the advantages of AWS EKS over the use of ECS to improve their deployment process. I also wanted to demonstrate how Ansible and Terraform could work in tandem for provisiong, configuation management, and security compliance. Most of all, I wanted to do all of this with as close to a "Production" level architecture as I could provision without spending the few coins I have AND the provisioning had to be automated.
+This was a project I did for a prospective client to highlight the advantages of AWS EKS over the use of ECS. I also wanted to demonstrate how Ansible and Terraform could work in tandem for provisiong, configuation management, and security compliance. Most of all, I wanted to do all of this with as close to a "Production" level architecture as I could provision without spending the few coins I have AND the provisioning had to be automated.
 
 The project is based on the AWS Whitepaper "Best Practices for WordPress on AWS" which you can download as a PDF here:
 
