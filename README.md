@@ -83,10 +83,13 @@ $ terraform init && terraform apply -auto-approve
 After Terraform is finished provisiong you should have the following resources and services:
 - A VPC Resource map that looks similar to this:
   ![wp-project-vpc-readme-1](https://github.com/user-attachments/assets/d72b2194-484c-40d8-a7b7-d063041639cd)
-
 - A List of Security groups that look similar to this:
+  ![wp-project-sgr-list](https://github.com/user-attachments/assets/2770d661-a10c-4de1-bd37-894b0d827e6f)
 - An Aurora DB cluster using db.t3.medium instances:
+  ![wp-project-aurora](https://github.com/user-attachments/assets/5ec3644c-26fe-4310-b9ef-2c4d9cba950a)
 - An EFS file system with a 2 Access points:
+  ![wp-project-aurora](https://github.com/user-attachments/assets/a83bd581-4295-4671-91ca-91cdd3e4a1ce)
+  ![wp-project-efs-ap](https://github.com/user-attachments/assets/8988bc80-f09e-4f6e-ae6f-81a9dc1f73fa)
 - A 3 node Elasticache/Memcache cluster using cache.t3.micro instances
 - A secret in Secrets Manager containing the Aurora DB password
 - The folowing users creted in IAM:
