@@ -9,10 +9,10 @@ externalDatabase:
   user: wpdbadmin
   existingSecret: aurora-db-secret
   port: 3306
-#wordpressConfigureCache: true
-#externalCache:
-#  host: {{ memcache_endpoint }} 
-#  port: 11211 
+wordpressConfigureCache: true
+externalCache:
+  host: {{ memcache_endpoint }} 
+  port: 11211 
 persistence:
   existingClaim: wp-project-efs-pvc
 replicaCount: 3

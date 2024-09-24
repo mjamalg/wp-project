@@ -3,17 +3,15 @@
   amazon.aws.rds_cluster_info:
     db_cluster_identifier: "{{ rds_cluster_db_identifier }}"
   register: rds_info
-
-- debug:
-    msg: "{{ rds_info.clusters[0].endpoint }}"
+  tags:
+    - get_rds_info
 
 - name: obtain all information for a single ACM certificate
   community.aws.acm_certificate_info:
     domain_name: "{{ cert_domain }}"
   register: cert_info
-
-- debug:
-    msg: "{{ cert_info.certificates[0].certificate_arn }}"
+  tags:
+    - get_cert_info
 
 - name: obtain all information for a single ElastiCache cluster
   community.aws.elasticache_info:
@@ -26,10 +24,10 @@
   #Check the cloudfront-user.tf file in vpc-terraform for reference
   ansible.builtin.shell: aws iam create-access-key --user-name {{ wp_cd_user }} > {{ role_file_path }}/wpcdn-user-credentials.json
   tags:
-    -    create_wpcdn_iam_access_and_secret_key   
+    - create_wpcdn_iam_access_and_secret_key   
   
 - set_fact:
-    memcache_endpoint: "{{ elasticache_info.elasticache_clusters[0].configuration_endpoint.address }}:{{ elasticache_info.elasticache_clusters[0].configuration_endpoint.port }}"
+    memcache_endpoint: "{{ elasticache_info.elasticache_clusters[0].configuration_endpoint.address }}"
 
 - name: Create Bitnami Wordpress value override chart
   ansible.builtin.template:
