@@ -1,6 +1,5 @@
 module "aws-load-balancer-controller-policy" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
-  version = "5.44.0"
 
   name = "AWSLoadBalancerControllerIAMPolicy"
   path = "/"

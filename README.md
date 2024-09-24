@@ -36,7 +36,7 @@ Novice level experience working with Wordpress.
 
 ##### **System:**
 * Python ≥ 3.10  
-* pip (latest) and the following python libraries:
+* pip and the following python libraries:
     * boto3
     * pyyaml
     * kubernetes
@@ -49,26 +49,52 @@ Novice level experience working with Wordpress.
 * k9s  ≥ 0.30.4 (optional: only you have experience using it to manage Kubernetes clusters)
 
 ##### **System Alternative:**
-Feel free to use my Ubuntu based image that contains all the above packages. 
-```bash
-docker run -it mjsmoov97/wp-project-runenv:latest 
+Feel free to use my Ubuntu based image that contains all the packages and libraries needed. 
+```
+$ docker run -it mjsmoov97/wp-project-runenv:latest 
 ```
 ### How To Provision 
-Clone the repo
-##### make changes in the following files:
-- **vpc-terraform/providers.tf:** Add your preferred AWS Authentication information to the AWS provider definition, as well as your state file backend defintion if you're using a specific backend for the terraform state file.
-- **eks-ansible/roles/bitnami-wordpress-install/files/defaults/main.yml:**  Change "cert_domain" and "hostname" to your domain name.
-- **eks-ansible/roles/eks-addon-config/external-dns-sa-config.yml:** change the --domain-filter value to your domain name.n
-
-##### Provision the AWS environment (total time betwen 25 - 45 minutes):
-- VPC
-* Run the following commands:
+##### 1. Clone the Repo
+```
+$ git clone git@github.com:mjamalg/wp-project.git
+```
+##### 2.  Update the following files:
+- **In vpc-terraform**
+    - _providers.tf:_
+        - Change to your desired Region  
+        - Add your preferred AWS Authentication information to the AWS provider definition.
+- **In eks-ansible**
+    - _roles/bitnami-wordpress-install/defaults/main.yml:_
+        - Change "cert_domain" to your domain name.
+        - Change "hostname" to your domain name.
+    - _roles/eks-addon-config/files/external-dns-sa-config.yml:_
+        - Change the "--domain-filter" value to your domain name.
+  
+##### 3. Provision the AWS environment (total time betwen 25 - 45 minutes):
+###### VPC (Provision time approx 20 - 35 minutes)
+Run the following commands:
     * ```
-        $ cd vpc-terraform
-        $ terraform init
-        $ terraform plan
-        $ terraform apply -auto-approve
+$ cd vpc-terraform
+    ```
+    * ```	
+$ terraform init
 	```
+    * ``` 
+$ terraform apply -auto-approve
+    	 ```
+Terraform provisions the following:
+    * A new VPC tagged "WP Project" consisting of:
+    	* 3 Availablity Zones - us-east-1a,1b,1c with each az consisting of 1 public and 2 private subnets.
+    		* Public subnets are tagged WP Project-pub-1a|1b|1c.
+    		* Private app subnets (where the EKS cluster will be created) are tagged WP Project-priv-app-1a|1b|1c.
+    		* Private data subnets (where Aurora, Memcache and EFS are created) are tagged with WP Project-priv-data-1a|1b|1c.
+    * 1 IGW tagged "WP Project Public IGW" where all public subnets are routed through.
+    * 3 NAT GW's tagged "WP Project Priv NATGW", one for each AZ
+    * 5 route tables:
+    	* Default route table for the VPC
+    	* 1 public route table tagged WP Project Public Rtb
+    	* 3 private route tables tagged WP Project Private Rtb
+    *  5 Security Groups:  
 - EKS Cluster
     * run the following commands:
         * ```

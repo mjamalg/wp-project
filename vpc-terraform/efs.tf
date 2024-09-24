@@ -1,13 +1,11 @@
 
 module "efs" {
   source  = "terraform-aws-modules/efs/aws"
-  version = "1.6.3"
 
-  #EFS Module has the following defaults - I needed this to keep costs low..feel free to change
-  #throughput_mode = bursting 
-  #performance_mode = generalPurpose
+  # EFS Module has the following defaults - I needed this to keep costs low..feel free to change
+  # throughput_mode = bursting 
+  # performance_mode = generalPurpose
   
-
   name = var.efs_file_name  
   creation_token = var.efs_creation_token
   encrypted = true

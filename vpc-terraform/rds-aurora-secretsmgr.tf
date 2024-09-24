@@ -1,9 +1,5 @@
-
 /* Note 1: to use a kubernetes secret containg DB credentials with Bitnami Wordpress, it looks for a key called 
 "mariadb-password" for the database password. Its hardcoded :-( 
-
-   Note 2: Once a secret is created and it's not destroyed
-  every time you run a terraform apply it will generate a new password O.o Working as intended
 */
 
 locals {

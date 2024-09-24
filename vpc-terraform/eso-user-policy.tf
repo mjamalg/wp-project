@@ -1,6 +1,5 @@
 module "eso-secrets-policy" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
-  version = "5.44.0"
   
   name = "ESOSecretsManagerPolicy"
   path = "/"
