@@ -14,7 +14,7 @@ Here's the original reference diagram from the whitepaper:
 
 ![aws-presentation](https://github.com/user-attachments/assets/a4aac926-36ca-47a2-b578-1eb87f485214)
 
-I decided to modify the whitepaper architecture by adding an extra AZ, replacing EC2 instances with an EKS cluster, removing the Bastion Host (LOL) and adding extra functionality with helm charts for external-dns, the AWS Load Balancer Controller, the External Secrets Operator for Kubernetes, and Bitnami's Wordpress for Kubernetes. Here's my version:
+I decided to modify the whitepaper architecture by adding an extra AZ, replacing EC2 instances with an EKS cluster, removing the Bastion Host (LOL) and adding extra functionality with helm charts for ExternalDNS, the AWS Load Balancer Controller, the External Secrets Operator for Kubernetes, and Bitnami's Wordpress for Kubernetes. Here's my version:
 
 Additional services leveraged not included in the whitepaper:
 * AWS Certificate Manager (ACM)
