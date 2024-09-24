@@ -129,7 +129,6 @@ The playbook has installed the AWS Load Balancer Controller, the External Secret
  - An A record (with and additional CNAME if you specified a subdomain for your hostname) created by ExternalDNS with an alias pointing to an ALB created by the AWS Load Balancer Controller.
  
  Depending on DNS and your TTL's it may take between 10 minutes and even 2 hours before you'll be able to see the default WP page when you go to your browser:
- 
  ![wp-project-home-page](https://github.com/user-attachments/assets/f323c79c-0ff3-4be8-b424-99eff6e2d669)
 
 
