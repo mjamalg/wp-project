@@ -131,10 +131,9 @@ The playbook has installed the AWS Load Balancer Controller, the External Secret
  Depending on DNS and your TTL's it may take between 10 minutes and even 2 hours before you'll be able to see the default WP page when you go to your browser:
  ![wp-project-home-page](https://github.com/user-attachments/assets/f323c79c-0ff3-4be8-b424-99eff6e2d669)
 A full tutorial on how to use and configure Wordpress is beyond the scope of this project. However I will add a couple of pointers for you to help you get started.
-- W3 Total Cache for Memcached and CDN configuration
-  - Wordpress uses the W3 Total Cache plugin for Memcached and configuration. There seems to be an issue with connecting the plugin with AWS Elasticache. 
-  - Here's a link to an excellent tutorial on how to configure the plugin to work with CloudFront. The wpcdn user has been created for you to do this. The Access Key and Secret Access Key will be located in the eks-ansible/roles/bitnami-wordpress-install/files/wpcdn-user-credentials.json file provided you ran the wp-eks-install.yml playbook successfully.
-      - []()[Setup An AWS CloudFront CDN For WordPress in 15 Minutes](https://www.youtube.com/watch?v=eOOk_wSmfYI)
+- Wordpress uses the W3 Total Cache plugin for Memcached and CDN configuration. There seems to be an issue with connecting the plugin with AWS Elasticache. 
+- Here's a link to an excellent tutorial on how to configure the plugin to work with CloudFront. The wpcdn user has been created for you to do this. The Access Key and Secret Access Key will be located in the eks-ansible/roles/bitnami-wordpress-install/files/wpcdn-user-credentials.json file provided you ran the wp-eks-install.yml playbook successfully.
+  - []()[Setup An AWS CloudFront CDN For WordPress in 15 Minutes](https://www.youtube.com/watch?v=eOOk_wSmfYI)
    
 ### Removing All Resources
 ##### 1. Uninstall the Bitnami WordPress helm chart 
