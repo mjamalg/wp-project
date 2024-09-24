@@ -8,8 +8,6 @@ This was a project I did for a prospective client to highlight the advantages of
 
 The project is based on the AWS Whitepaper "Best Practices for WordPress on AWS" which you can download as a PDF here:
 
-AWS Whitepaper: Best Practices for WordPress
-
 [https://docs.aws.amazon.com/pdfs/whitepapers/latest/best-practices-wordpress/best-practices-wordpress.pdf#welcome]()
 
 Here's the original reference diagram from the whitepaper:
