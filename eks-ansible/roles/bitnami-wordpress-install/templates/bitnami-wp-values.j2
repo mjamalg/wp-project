@@ -24,7 +24,7 @@ ingress:
   annotations: { 
     alb.ingress.kubernetes.io/scheme: internet-facing,
     alb.ingress.kubernetes.io/target-type: instance,
-    alb.ingress.kubernetes.io/certificate-arn: {{ cert_info.certificates[0].certificate_arn }}, # Just get a public one for you domain it's free no excuses
+    alb.ingress.kubernetes.io/certificate-arn: {{ cert_info.certificates[0].certificate_arn }}, # Just get a public one for your domain it's free no excuses
     alb.ingress.kubernetes.io/tags: Name={{ alb_ingress_tag }}, # This is optional, I tag everything!
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]',
     alb.ingress.kubernetes.io/ssl-redirect: '443',  # HTTP to HTTPS redirect
