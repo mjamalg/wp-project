@@ -77,7 +77,8 @@ $ git clone git@github.com:mjamalg/wp-project.git
 ##### 3. Provision the AWS architecture (total time betwen 30 - 50 minutes):
 ###### VPC
 Run the following commands in the _**vpc-terraform**_ directory:
-    * ```$ terraform init && terraform apply -auto-approve
+    * ```
+    $ terraform init && terraform apply -auto-approve
     ```
 After Terraform is finished provisiong you should have the following resources and services:
 - A VPC Resource map that looks similar to this:
