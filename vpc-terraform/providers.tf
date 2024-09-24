@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.64.0"
+      version = "~> 5.0"
     }
   }
 }
@@ -10,7 +10,7 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
-  profile = "< I perfer to use the AWS_PROFILE env variable, if you also use it put it here >"
+  profile = "< I perfer to use the AWS_PROFILE env variable>"
  
    #Place your AWS Credentials here if you don't use the AWS_PROFILE env variable
 
