@@ -88,30 +88,30 @@ After Terraform is finished provisiong you should have the following resources a
 - An Aurora DB cluster using db.t3.medium instances:
   ![wp-project-aurora-readme-1](https://github.com/user-attachments/assets/b8a5b415-03b3-47fa-a330-cd843de2f939)
 - An EFS file system with a 2 Access points:
-  ![wp-project-aurora](https://github.com/user-attachments/assets/a83bd581-4295-4671-91ca-91cdd3e4a1ce)
-  ![wp-project-efs-ap](https://github.com/user-attachments/assets/8988bc80-f09e-4f6e-ae6f-81a9dc1f73fa)
+  ![wp-project-efs-fs-readme-1](https://github.com/user-attachments/assets/cf4bac5b-1b50-4291-b97d-8358d990692e)
+  ![wp-project-efs-ap-readme-1](https://github.com/user-attachments/assets/e7bc7d72-1bb3-4fcf-98ef-3eb328f9d842)
 - A 3 node Elasticache/Memcache cluster using cache.t3.micro instances
   ![wp-project-memcached-list-readme-2](https://github.com/user-attachments/assets/92d1fff0-ef12-47b4-bdb9-0a36d91b60a6)
 - A secret in Secrets Manager containing the Aurora DB password
+  ![wp-project-secrets-mgr-list-readme](https://github.com/user-attachments/assets/9665dfd4-b99c-4d2b-80ee-aeae8fb8f8ef)
 - The folowing users creted in IAM:
     - external-secrets with an attached policy called "ESOSecretsManagerPolicy"
     - wpcdn with the AWS managed CloudFrontFullAccess policy attached
 
 ###### EKS
 Run the following commands in the _**eks-ansible**_ directory to deploy EKS:
-    * ```$ ansible-playbook eksctl-config-file-create.yml
+    - ```$ ansible-playbook eksctl-config-file-create.yml
     ```
-     * ``` $ eksctl create cluster -f eksctl-config-files/eksctl-config.yml
+     - ``` $ eksctl create cluster -f eksctl-config-files/eksctl-config.yml
     ```
-
 After EKS is deployed, verify it's running and that you have access to it by running the following commands:
     * ``` $ kubectl get nodes
     ```
-(pic goes here)
+![wp-project-kubectl-check-readme-1](https://github.com/user-attachments/assets/2c3e0787-8b26-42ff-acdb-29ca58b916c1)
     * ``` $ kubectl get namespaces
     ```
-(pic goes here)
-    
+![wp-project-kubectl-check-readme-2](https://github.com/user-attachments/assets/cb6fcc25-d954-46d9-ae8c-8f4e813a6a3a)
+
 ##### Bitnami WP Install
 Run the following command in the _**eks-ansible**_ directory
     * ```$ ansible-playbook wp-eks-install.yml
