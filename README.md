@@ -140,6 +140,7 @@ There should be 3 wordpress pods running in the wordpress namespace:
 $ kubectl get pods -n wordpress
 ```
 ![wp-project-bitnami-kubectl-readme-1](https://github.com/user-attachments/assets/26afe757-fc02-49d7-99e0-d94454822dd4)
+
 After verifying the pods are running check the pod log to make sure apache has started and the pods are accepting connectins from the Wordpress service:
 ```
 $ kubectl logs [enter a pod listed from the previous command] -n wordpress
