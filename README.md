@@ -135,12 +135,15 @@ ALB
 - There will be 2 load balancers created by the AWS Load Balancer Controller based on the ingress rules in the eks-ansible/roles/bitnami-wordpress-install/files/bitnami-wp-values.yml chart. An application load balancer and a network load balancer.
 
 EKS
-- There should be a 3 wordpress pods running in the wordpress namespace.
+There should be 3 wordpress pods running in the wordpress namespace:
 ```
 $ kubectl get pods -n wordpress
 ```
 ![wp-project-bitnami-kubectl-readme-1](https://github.com/user-attachments/assets/26afe757-fc02-49d7-99e0-d94454822dd4)
-- After verifying the pods are running check the logs and make sure you see that it's accepting connections
+After verifying the pods are running check the pod log to make sure apache has started and the pods are accepting connectins from the Wordpress service:
+```
+$ kubectl logs [enter a pod listed from the previous command] -n wordpress
+```
 ![wp-project-bitnami-readme-2](https://github.com/user-attachments/assets/d08af5cd-40d5-485f-83a5-d4a4dd2e48ab)
 
  Depending on DNS and your TTL's it may take between 10 minutes and even 2 hours before you'll be able to see the default WP page when you go to your browser:
