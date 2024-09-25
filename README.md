@@ -148,7 +148,7 @@ $ kubectl logs [enter a pod listed from the previous command] -n wordpress
 ```
 ![wp-project-bitnami-readme-2](https://github.com/user-attachments/assets/d08af5cd-40d5-485f-83a5-d4a4dd2e48ab)
 
- Depending on DNS and your TTL's it may take between 10 minutes and even 2 hours before you'll be able to see the default WP page when you go to your browser:
+ Depending on DNS, your TTL's, or how long it takes for the load balancers status to change to "Active", it may take between 10 minutes and even 2 hours before you'll be able to see the default WP page when you go to your browser:
  ![wp-project-home-page](https://github.com/user-attachments/assets/f323c79c-0ff3-4be8-b424-99eff6e2d669)
 A full tutorial on how to use and configure Wordpress is beyond the scope of this project. However I will add a couple of pointers for you to help you get started.
 - Wordpress uses the W3 Total Cache plugin for Memcached and CDN configuration. The plugin will not work with AWS Elasticache out of the box. A way forward may be found here:
