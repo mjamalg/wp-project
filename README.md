@@ -137,7 +137,7 @@ A full tutorial on how to use and configure Wordpress is beyond the scope of thi
 - Wordpress uses the W3 Total Cache plugin for Memcached and CDN configuration. The plugin will not work with AWS Elasticache out of the box. A way forward may be found here:
     - []()[Speeding up WordPress With Amazon ElastiCache for Memcached](https://aws.amazon.com/elasticache/memcached/wordpress-with-memcached)
 - Here's a link to an excellent tutorial on how to configure the plugin to work with CloudFront. The wpcdn user has been created for you to do this. The Access Key and Secret Access Key for the user will be located in eks-ansible/roles/bitnami-wordpress-install/files/wpcdn-user-credentials.json provided you ran the wp-eks-install.yml playbook successfully.
-      - []()[Setup An AWS CloudFront CDN For WordPress in 15 Minutes](https://www.youtube.com/watch?v=eOOk_wSmfYI)
+    - []()[Setup An AWS CloudFront CDN For WordPress in 15 Minutes](https://www.youtube.com/watch?v=eOOk_wSmfYI)
    
 ### Removing All Resources
 ##### 1. Uninstall the Bitnami WordPress helm chart 
