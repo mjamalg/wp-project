@@ -67,8 +67,10 @@ $ git clone git@github.com:mjamalg/wp-project.git
 - **In eks-ansible**
     - _roles/bitnami-wordpress-install/_
         - defaults/main.yml:
-            - Change "cert_domain" to your domain name.
-            - Change "hostname" to your domain name.
+            - Change "cert_domain" to your _CERTIFICATE_ domain name.
+            - Change "hostname" to whatever you want your wordpress domain to be. It could be your .com or a subdomain. It's your party!
+        - templates/bitnami-wp-values.j2:
+            - You can change the wordpress admin default username and password in this file.      
     - _roles/eks-addon-config/_
         - files/external-dns-sa-config.yml:
             - Change the "-domain-filter" value to your domain name.
