@@ -166,10 +166,9 @@ Run the following command in the _**eks-ansible**_ directory:
 ```
 $ eksctl delete cluster -f eksctl-config-files/eksctl-config.yml
 ```
-Feel ree to remove
 ##### 3. Terraform destory (will take between 15 - 30 minutes)
 Run the following command the _**vpc-terraform**_ directory:
 ```
 $ terraform destory -auto-approve
 ```
-## QED
+## Q.E.D
