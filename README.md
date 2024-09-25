@@ -125,16 +125,24 @@ Run the following command in the _**eks-ansible**_ directory
 ```
 $ ansible-playbook wp-eks-install.yml
 ```
-The playbook has installed the AWS Load Balancer Controller, the External Secrets Operator (allows access to the Secrets Manager secret as a kubernetes secret),  cert-manager, ExternalDNS (synchronizes exposed Kubernetes Services and Ingresses with Route 53)
- and Bitnami Wordpress for Kubernetes.  There are a few things you should see: 
+The playbook has installed the AWS Load Balancer Controller, the External Secrets Operator (allows access to the Secrets Manager secret as a kubernetes secret),  cert-manager, ExternalDNS (synchronizes exposed Kubernetes Services and Ingresses with Route 53) and Bitnami Wordpress for Kubernetes.  There are a few things you should see: 
 
 Route 53
 - A TXT entry created by ExternalDNS
 - An A record (with and additional CNAME if you specified a subdomain for your hostname) created by ExternalDNS with an alias pointing to an ALB created by the AWS Load Balancer Controllers
 
 ALB
-- There will be 2 load balancers created by the AWS Load Balancer Controller based on the ingress rules in the eks-ansible/roles/bitnami-wordpress-install/files/bitnami-wp-values.yml chart. An application load balancer and a network load balancer. 
-  
+- There will be 2 load balancers created by the AWS Load Balancer Controller based on the ingress rules in the eks-ansible/roles/bitnami-wordpress-install/files/bitnami-wp-values.yml chart. An application load balancer and a network load balancer.
+
+EKS
+- There should be a 3 wordpress pods running in the wordpress namespace.
+```
+$ kubectl get pods -n wordpress
+```
+![wp-project-bitnami-kubectl-readme-1](https://github.com/user-attachments/assets/26afe757-fc02-49d7-99e0-d94454822dd4)
+- After verifying the pods are running check the logs and make sure you see that it's accepting connections
+![wp-project-bitnami-readme-2](https://github.com/user-attachments/assets/d08af5cd-40d5-485f-83a5-d4a4dd2e48ab)
+
  Depending on DNS and your TTL's it may take between 10 minutes and even 2 hours before you'll be able to see the default WP page when you go to your browser:
  ![wp-project-home-page](https://github.com/user-attachments/assets/f323c79c-0ff3-4be8-b424-99eff6e2d669)
 A full tutorial on how to use and configure Wordpress is beyond the scope of this project. However I will add a couple of pointers for you to help you get started.
