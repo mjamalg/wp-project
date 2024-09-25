@@ -73,10 +73,13 @@ $ git clone git@github.com:mjamalg/wp-project.git
             - You can change the wordpress admin default username and password in this file.      
     - _roles/eks-addon-config/_
         - files/external-dns-sa-config.yml:
+            - Chage the external-dns image version to the latest if desired. v0.15.0 was the latest at the time of publishing. You can find the latest version here:
+                - ![ExternalDNS](https://github.com/kubernetes-sigs/external-dns/)      
             - Change the "-domain-filter" value to your domain name.
-            - Change the Deployment "spec.template.spec.containers.env.name.value" to your desired region
+            - Change the Deployment "spec.template.spec.containers.env.name.value" to your desired region.
         - defaults/main.yml:
-            - Change "cert_manager_helm_chart_version" to the desired version. 1.15.3 was the latest at the time of publishing.
+            - Change "cert_manager_helm_chart_version" to the desired version. 1.15.3 was the latest at the time of publishing. You can find the lastest version here:
+                -![cert-manager](https://cert-manager.io/) 
   
 ##### 3. Provision the AWS architecture (total time betwen 30 - 50 minutes):
 ##### **VPC**
