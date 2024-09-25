@@ -75,7 +75,7 @@ $ git clone git@github.com:mjamalg/wp-project.git
             - Change "cert_manager_helm_chart_version" to the desired version. 1.15.3 was the latest at the time of publishing.
   
 ##### 3. Provision the AWS architecture (total time betwen 30 - 50 minutes):
-###### **VPC**
+##### **VPC**
 Run the following commands in the _**vpc-terraform**_ directory:
 ```
 $ terraform init && terraform apply -auto-approve
@@ -98,7 +98,7 @@ After Terraform is finished provisiong you should have the following resources a
     - external-secrets with an attached policy called "ESOSecretsManagerPolicy"
     - wpcdn with the AWS managed CloudFrontFullAccess policy attached
 
-###### **EKS**
+##### **EKS**
 Run the following commands in the _**eks-ansible**_ directory to deploy EKS:
 ```
 $ ansible-playbook eksctl-config-file-create.yml
