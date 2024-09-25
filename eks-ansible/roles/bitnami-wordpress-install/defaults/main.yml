@@ -2,9 +2,8 @@
 role_file_path: "{{ role_path }}/files"
 rds_cluster_db_identifier: wp-project-rds #set in rds-aurora-vars.tf in vpc-terraform
 eso_external_secret: aurora-db-secret #from the roles/es-config/files/rds-db-secret.yml file. Look at spec.target.name
-cert_domain: example.com #change to your domain
+cert_domain: example.com #change to your certificate domain name
 elasticache_cluster_name: wp-project-memcached-cluster #set in memcached.auto.tfvars in vpc-terraform
 alb_ingress_tag: "WP Project AWS LoadBalancer Controller"
-hostname: example.com #change to your hostname
+hostname: example.com #change to your desired wordpress domain name
 wp_cd_user: wpcdn # user created in the cloudfront-user.tf file in vpc-terraform
-
