@@ -138,7 +138,7 @@ ALB
 ![wp-proejct-loadbalancers-README](https://github.com/user-attachments/assets/18a1f1a6-efe0-4986-8773-9d6575c13c25)
 
 EKS
-There should be 3 wordpress pods running in the wordpress namespace:
+- There should be 3 wordpress pods running in the wordpress namespace:
 ```
 $ kubectl get pods -n wordpress
 ```
