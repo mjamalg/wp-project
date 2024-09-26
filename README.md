@@ -128,21 +128,21 @@ $ ansible-playbook wp-eks-install.yml
 ```
 The playbook has installed the AWS Load Balancer Controller, the External Secrets Operator (allows access to the Secrets Manager secret as a kubernetes secret),  cert-manager, ExternalDNS (synchronizes exposed Kubernetes Services and Ingresses with Route 53) and Bitnami Wordpress for Kubernetes.  There are a few things you should see: 
 
-**Route 53**
+_**Route 53**_
 - A TXT entry created by ExternalDNS
 - An A record (with and additional CNAME if you specified a subdomain for your hostname) created by ExternalDNS with an alias pointing to an ALB created by the AWS Load Balancer Controllers
   ![wp-project-route53-readme](https://github.com/user-attachments/assets/b69ce899-dfba-4c4d-b414-41d435001dbd)
 
-**ALB**
+_**ALB**_
 - There will be 2 load balancers created by the AWS Load Balancer Controller based on the ingress rules in the eks-ansible/roles/bitnami-wordpress-install/files/bitnami-wp-values.yml chart. An application load balancer and a network load balancer.
   ![wp-proejct-loadbalancers-README](https://github.com/user-attachments/assets/18a1f1a6-efe0-4986-8773-9d6575c13c25)
 
-**EKS**
+_**EKS**_
 - There should be 3 wordpress pods running in the wordpress namespace:
     ```
     $ kubectl get pods -n wordpress
     ``` 
-![wp-project-bitnami-kubectl-readme-1](https://github.com/user-attachments/assets/26afe757-fc02-49d7-99e0-d94454822dd4)
+    ![wp-project-bitnami-kubectl-readme-1](https://github.com/user-attachments/assets/26afe757-fc02-49d7-99e0-d94454822dd4)
 
 After verifying the pods are running check the pod log to make sure apache has started and the pods are accepting connectins from the Wordpress service:
 ```
