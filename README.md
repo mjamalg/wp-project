@@ -103,7 +103,7 @@ After Terraform is finished provisiong you should have the following resources a
     - external-secrets with an attached policy called "ESOSecretsManagerPolicy"
     - wpcdn with the AWS managed CloudFrontFullAccess policy attached
 
-##### **EKS**
+#### **EKS**
 Run the following commands in the _**eks-ansible**_ directory to deploy EKS:
 ```
 $ ansible-playbook eksctl-config-file-create.yml
