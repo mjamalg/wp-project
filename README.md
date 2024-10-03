@@ -52,12 +52,12 @@ Additional services leveraged not included in the whitepaper:
 ##### **System Alternative:**
 Feel free to use my Ubuntu based image that contains all the packages and libraries needed. 
 ```
-$ docker run -it mjsmoov97/wp-project-runenv:latest 
+docker run -it mjsmoov97/wp-project-runenv:latest 
 ```
 ### How To Provision 
 ##### 1. Clone the Repo
 ```
-$ git clone git@github.com:mjamalg/wp-project.git
+git clone git@github.com:mjamalg/wp-project.git
 ```
 ##### 2.  Update the following files:
 - **In vpc-terraform**
@@ -83,7 +83,7 @@ $ git clone git@github.com:mjamalg/wp-project.git
 ##### **VPC**
 Run the following commands in the _**vpc-terraform**_ directory:
 ```
-$ terraform init && terraform apply -auto-approve
+terraform init && terraform apply -auto-approve
 ```
 After Terraform is finished provisiong you should have the following resources and services:
 - A VPC Resource map that looks similar to this:
@@ -106,25 +106,25 @@ After Terraform is finished provisiong you should have the following resources a
 #### **EKS**
 Run the following commands in the _**eks-ansible**_ directory to deploy EKS:
 ```
-$ ansible-playbook eksctl-config-file-create.yml
+ansible-playbook eksctl-config-file-create.yml
 ```
 ``` 
-$ eksctl create cluster -f eksctl-config-files/eksctl-config.yml
+eksctl create cluster -f eksctl-config-files/eksctl-config.yml
 ```
 After EKS is deployed, verify it's running and that you have access to it by running the following commands:
 ```
-  $ kubectl get nodes
+kubectl get nodes
 ```
 ![wp-project-kubectl-check-readme-1](https://github.com/user-attachments/assets/2c3e0787-8b26-42ff-acdb-29ca58b916c1)
 ```
-$ kubectl get namespaces
+kubectl get namespaces
 ```
 ![wp-project-kubectl-check-readme-2](https://github.com/user-attachments/assets/cb6fcc25-d954-46d9-ae8c-8f4e813a6a3a)
 
 ##### Bitnami WP Install
 Run the following command in the _**eks-ansible**_ directory
 ```
-$ ansible-playbook wp-eks-install.yml
+ansible-playbook wp-eks-install.yml
 ```
 The playbook has installed the AWS Load Balancer Controller, the External Secrets Operator (allows access to the Secrets Manager secret as a kubernetes secret),  cert-manager, ExternalDNS (synchronizes exposed Kubernetes Services and Ingresses with Route 53) and Bitnami Wordpress for Kubernetes.  There are a few things you should see: 
 
@@ -140,13 +140,13 @@ _**ALB**_
 _**EKS**_
 - There should be 3 wordpress pods running in the wordpress namespace:
     ```
-    $ kubectl get pods -n wordpress
+    kubectl get pods -n wordpress
     ``` 
     ![wp-project-bitnami-kubectl-readme-1](https://github.com/user-attachments/assets/26afe757-fc02-49d7-99e0-d94454822dd4)
 
 After verifying the pods are running check the pod log to make sure apache has started and the pods are accepting connectins from the Wordpress service:
 ```
-$ kubectl logs [enter a pod listed from the previous command] -n wordpress
+kubectl logs [enter a pod listed from the previous command] -n wordpress
 ```
 ![wp-project-bitnami-readme-2](https://github.com/user-attachments/assets/d08af5cd-40d5-485f-83a5-d4a4dd2e48ab)
 
@@ -162,16 +162,16 @@ A full tutorial on how to use and configure Wordpress is beyond the scope of thi
 ##### 1. Uninstall the Bitnami WordPress helm chart 
 This gracefully removes the entry made in the Route 53 host zone by ExternalDNS. If you know anything about DNS you know this comes under **MUST DO!**
 ```
-$ helm uninstall my-release --namespace wordpress
+helm uninstall my-release --namespace wordpress
 ```
 ##### 2. Use eskctl to delete the EKS cluster (will take between 15 - 30 minutes)
 Run the following command in the _**eks-ansible**_ directory:
 ```
-$ eksctl delete cluster -f eksctl-config-files/eksctl-config.yml
+eksctl delete cluster -f eksctl-config-files/eksctl-config.yml
 ```
 ##### 3. Terraform destory (will take between 15 - 30 minutes)
 Run the following command the _**vpc-terraform**_ directory:
 ```
-$ terraform destory -auto-approve
+terraform destory -auto-approve
 ```
 ## Q.E.D
