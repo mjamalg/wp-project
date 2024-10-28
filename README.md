@@ -50,7 +50,8 @@ Additional services leveraged not included in the whitepaper:
 * k9s  ≥ 0.30.4 (optional: only you have experience using it to manage Kubernetes clusters)
 
 ##### **System Alternative:**
-Feel free to use my Ubuntu based image that contains all the packages and libraries needed. 
+Feel free to use my Ubuntu based image that contains all the packages and libraries needed.
+I've also added my Dockerfile for you to create your own conatiner if you desire.
 ```
 docker run -it mjsmoov97/wp-project-runenv:latest 
 ```
