@@ -47,7 +47,7 @@ Additional services leveraged not included in the whitepaper:
 * eksctl ≥ 0.189.0
 * awscli ≥ v2
 * kubectl ≥ 1.30.5
-* k9s  ≥ 0.30.4 (optional: only you have experience using it to manage Kubernetes clusters)
+* k9s  ≥ 0.30.4 (optional: only if you have experience using it to manage Kubernetes clusters)
 
 ##### **System Alternative:**
 Feel free to use my Ubuntu based image that contains all the packages and libraries needed.
