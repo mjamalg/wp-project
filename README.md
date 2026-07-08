@@ -8,4 +8,3 @@
 
  👉 The current, complete, supported version lives at **[controlstacklab.io](https://controlstacklab.io)**
 
- ---
