@@ -4,7 +4,7 @@
 
  Since then, the project has been substantially modernized and expanded into **Control Stack Lab**, the current, fully updated, deploy-ready toolkit. The current version updates the entire stack to today's versions, adds an AI module built on AWS Bedrock, and includes a containerized workstation, complete architect's notes, AWS architecture diagrams, and step-by-step deployment guidance, all designed to help AWS Cloud Engineers stand out in technical interviews.
 
- **This repo is preserved as the starting point. The architecture diagram and project overview are here to show what was built and why.**
+ **This repo is preserved as the starting point.**
 
  👉 The current, complete, supported version lives at **[controlstacklab.io](https://controlstacklab.io)**
 
